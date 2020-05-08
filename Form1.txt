@@ -1,0 +1,15 @@
+Private Sub Command1_Click()
+
+If(Text1.Text = "Badri" And Text2.Text = "qwerty") Then
+
+MsgBox "Sign In Successful"
+
+Form2.show
+
+Else
+
+MsgBox "Enter a valid username or password"
+
+End If
+
+End Sub
