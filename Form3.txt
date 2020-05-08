@@ -1,0 +1,105 @@
+Dim con As New ADODB.Connection
+
+Dim rs as ADODB.Recordset
+
+Private Sub Command2_Click()
+
+rs.MovePrevious
+
+if rs.EOF Then
+
+MsgBox "No More Records"
+
+Else
+
+Text2.Text = rs("train_no")
+
+Text3.Text = rs("train_name")
+
+Text4.Text = rs("train_type")
+
+Text5.Text = rs("origin")
+
+Text6.Text = rs("destination")
+
+Text7.Text = rs("dept_time")
+
+Text8.Text = rs("arrival")
+
+End If
+
+End Sub
+
+
+Private Sub Command3_Click(Index As Integer)
+
+Form4.Show
+
+End Sub
+
+
+Private Sub Form_Load()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "select * from train1 where origin in(select origin from query) and destination
+         in (select destination from query)",con,adOpenDynamic,adLockBatchOptimistic
+         
+         
+ If rs.EOF Then
+ 
+ MsgBox "No Trains Exist!"
+ 
+ Unload Me
+ 
+ Els
+ 
+Text2.Text = rs("train_no")
+
+Text3.Text = rs("train_name")
+
+Text4.Text = rs("train_type")
+
+Text5.Text = rs("origin")
+
+Text6.Text = rs("destination")
+
+Text7.Text = rs("dept_time")
+
+Text8.Text = rs("arrival")
+
+End If
+
+End Sub
+
+Private Sub Command1_Click(Index As Integer)
+
+rs.MoveNext
+
+If rs.EOF Then
+
+MsgBox "No More Records!"
+
+Else
+
+Text2.Text = rs("train_no")
+
+Text3.Text = rs("train_name")
+
+Text4.Text = rs("train_type")
+
+Text5.Text = rs("origin")
+
+Text6.Text = rs("destination")
+
+Text7.Text = rs("dept_time")
+
+Text8.Text = rs("arrival")
+
+End If
+
+End Sub
