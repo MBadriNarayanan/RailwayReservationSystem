@@ -1,0 +1,73 @@
+Dim con As New ADODB.Connection
+
+Dim rs as ADODB.Recordset
+
+Private Sub Command3_Click()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "insert into train_num values('" & Text1.Text & "')",con,adOpenDynamic,adLockOptimistic
+
+rs.Open "select available_ac,available_sleeper from train_check where train_check.train_no
+         in(select tno from train_num)",con,adOpenDynamic,adLockBatchOptimistic
+
+Text2.Text = rs("available_ac")
+
+Text3.Text = rs("available_sleeper")
+
+End Sub
+
+
+Private Sub Command1_Click()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "insert into payment_details values((select tno from train_num),(select no_tickets
+        from query),500,500 * (select no_tickets from query))",con,adOpenDynamic,
+        adLockOptimistic
+
+
+rs.Open "update train_check set available_ac = available_ac -(select no_tickets from query)
+         where (available_ac - (select no_tickets from query)) < 0 or (available_ac - (select no_tickets
+         from query)) !=0 and train_check.train_no in(select tno from train_num)",con,
+         adOpenDynamic,adLockBatchOptimistic
+         
+Form5.Show
+
+End Sub
+
+
+Private Sub Command2_Click()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "insert into payment_details values((select tno from train_num),(select no_tickets
+        from query),300,300 * (select no_tickets from query))",con,adOpenDynamic,
+        adLockOptimistic
+
+
+rs.Open "update train_check set available_sleeper = available_sleeper -(select no_tickets from query)
+         where (available_sleeper - (select no_tickets from query)) < 0 or (available_sleeper - (select no_tickets
+         from query)) !=0 and train_check.train_no in(select tno from train_num)",con,
+         adOpenDynamic,adLockBatchOptimistic
+         
+Form5.Show
+
+End Sub
+
+
+Private Sub Form_Load()
+
+End Sub
