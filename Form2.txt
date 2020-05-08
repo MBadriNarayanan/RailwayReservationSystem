@@ -1,0 +1,25 @@
+Dim con As New ADODB.Connection
+
+Dim rs as ADODB.Recordset
+
+Private Sub Command1_Click()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "insert into query values('" & Text1.Text & "','" & Text2.Text & "','" & Text3.Text & "',
+                                  '" & Text4.Text & "','" & Text5.Text & "')",con,
+                                  adOpenDynamic,adLockBatchOptimistic  
+
+MsgBox "Finding Trains"  
+
+Form3.Show
+
+con.Close
+
+Private Sub Form_Load()
+
+End Sub
