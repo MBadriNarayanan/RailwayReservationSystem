@@ -1,0 +1,20 @@
+Private Sub Command1_Click()
+
+Set con = New ADODB.Connection
+
+Set rs =  New ADODB.Recordset
+
+con.Open("Provider = MSDAORA.1;Password =ssn;User ID =system;Persist Security Info = True")
+
+rs.Open "delete from train1 where train_no = '" & Text1.Text & '" ",con,adOpenDynamic,
+         adLockBatchOptimistic
+         
+MsgBox "Deleting Train"
+
+con.Close
+
+End Sub
+
+Private Sub Form_Load()
+
+End Sub
